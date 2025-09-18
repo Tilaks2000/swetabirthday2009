@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday My Love ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: radial-gradient(circle at center, #ffafbd, #ffc3a0);
+      font-family: 'Great Vibes', cursive;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+      padding: 0 20px;
+      text-shadow:
+        0 0 10px #ff5c8d,
+        0 0 20px #ff5c8d,
+        0 0 30px #ff5c8d,
+        0 0 40px #ff5c8d;
+      animation: glowing 2s ease-in-out infinite alternate;
+      z-index: 10;
+    }
+    @keyframes glowing {
+      0% {
+        text-shadow:
+          0 0 5px #ff4081,
+          0 0 10px #ff4081,
+          0 0 20px #ff4081,
+          0 0 40px #ff80ab;
+        color: #fff0f6;
+      }
+      100% {
+        text-shadow:
+          0 0 10px #ff1744,
+          0 0 20px #ff1744,
+          0 0 30px #ff1744,
+          0 0 60px #ff80ab;
+        color: #ffe7f0;
+      }
+    }
+    p {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      color: #fff7fc;
+      font-weight: 500;
+      text-shadow: 0 0 5px #ff5c8d;
+      max-width: 90vw;
+      z-index: 10;
+    }
+    /* Confetti */
+    canvas#confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -100px;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at 30% 35%, #ff6188, #d81e5b);
+      clip-path: polygon(
+        50% 0%, 61% 12%, 75% 12%, 88% 24%, 88% 39%, 50% 100%, 12% 39%, 12% 24%, 25% 12%, 39% 12%
+      );
+      animation-timing-function: ease-in-out;
+      opacity: 0.9;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎂 Happy Birthday My Beautiful Fiancée ❤️</h1>
+  <p>You are my heart, my soul, my everything. Here's to our forever. 💍✨</p>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Confetti pieces
+    const confettiPieces = [];
+    for (let i = 0; i < 150; i++) {
+      confettiPieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: 10,
+        h: 20,
+        color: `hsl(${Math.random() * 360}, 90%, 60%)`,
+        speed: Math.random() * 4 + 2
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+      });
+    }
+
+    function updateConfetti() {
+      confettiPieces.forEach(p => {
+        p.y += p.speed;
+        if (p.y > canvas.height) {
+          p.y = -20;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    function confettiLoop() {
+      drawConfetti();
+      updateConfetti();
+      requestAnimationFrame(confettiLoop);
+    }
+    confettiLoop();
+
+    // Floating hearts animation
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      heart.style.opacity = Math.random();
+
+      document.body.appendChild(heart);
+
+      heart.animate([
+        { transform: 'translateY(0) scale(1)', opacity: heart.style.opacity },
+        { transform: 'translateY(-100vh) scale(1.5)', opacity: 0 }
+      ], {
+        duration: (Math.random() * 3000 + 2000),
+        easing: 'ease-out',
+        iterations: 1
+      }).onfinish = () => {
+        heart.remove();
+      };
+    }
+
+    setInterval(createHeart, 500);
+  </script>
+</body>
+</html>
